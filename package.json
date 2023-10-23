@@ -8,6 +8,9 @@
     "build": "webpack --mode production",
     "publish": "git subtree push --prefix dist origin gh-pages"
   },
+  "engines": {
+    "node": ">= 18 < 19"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
