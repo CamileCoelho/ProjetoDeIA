@@ -1,10 +1,10 @@
-import { Rotas } from "../models/Rotas";
-import BuscaLargura from "../algoritimos-de-busca/BuscaLargura";
-import BuscaProfundidade from "../algoritimos-de-busca/BuscaProfundidade";
-import { BuscaGulosa } from "../algoritimos-de-busca/BuscaGulosa";
-import { TiposDeBuscaEnum } from "../models/TiposDeBuscaEnum";
-import { Robo } from "../models/Robo";
-import { Resultado } from "../models/Resultado";
+import { Rotas } from "../../models/Rotas";
+import BuscaLargura from "../../algoritimos-de-busca/BuscaLargura";
+import BuscaProfundidade from "../../algoritimos-de-busca/BuscaProfundidade";
+import { BuscaGulosa } from "../../algoritimos-de-busca/BuscaGulosa";
+import { TiposDeBuscaEnum } from "../../models/TiposDeBuscaEnum";
+import { Robo } from "../../models/Robo";
+import { Resultado } from "../../models/Resultado";
 
 const robo1 = new Robo('0x12', "R1");
 const robo2 = new Robo('1x12', "R2");
