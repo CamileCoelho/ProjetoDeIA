@@ -102,6 +102,18 @@ function realizaBusca(algoritimo: any, prateleira: string) {
   return comparaResultado([resultadoR1, resultadoR2, resultadoR3, resultadoR4, resultadoR5]);
 }
 
+function realizaBuscaGulosa(algoritimo: any, prateleira: string) {
+  var resultadoR1 = algoritimo.realizaBusca(robo1.coordenada, prateleira);
+  var resultadoR2 = algoritimo.realizaBusca(robo2.coordenada, prateleira);
+  var resultadoR3 = algoritimo.realizaBusca(robo3.coordenada, prateleira);
+  var resultadoR4 = algoritimo.realizaBusca(robo4.coordenada, prateleira);
+  var resultadoR5 = algoritimo.realizaBusca(robo5.coordenada, prateleira);
+
+  atribuiRoboAoResultado(resultadoR1, resultadoR2, resultadoR3, resultadoR4, resultadoR5)
+  
+  return comparaResultado([resultadoR1, resultadoR2, resultadoR3, resultadoR4, resultadoR5]);
+}
+
 function atualizaPosicaoRoboNoHTML(roboEscolhido: Robo) {
     const tdElement = document.getElementById(roboEscolhido.coordenada);
     if (tdElement) {
@@ -125,6 +137,18 @@ function atribuiRoboAoResultado(resultadoR1: Resultado, resultadoR2: Resultado, 
 }
 
 function comparaResultado(valores: Resultado[]): Resultado {
+  var resultado = valores[0];
+  valores.forEach(r => {
+    if (resultado.caminho.length > r.caminho.length) {
+      resultado.caminho = r.caminho;
+      resultado = r;
+    }
+  });
+  
+  return resultado;
+}
+
+function comparaResultadoGulosa(valores: Resultado[]): Resultado {
   var resultado = valores[0];
   valores.forEach(r => {
     if (resultado.caminho.length > r.caminho.length) {
