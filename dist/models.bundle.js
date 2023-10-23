@@ -1,0 +1,2 @@
+(()=>{"use strict";var a;(function(a){a[a.BuscaLargura=0]="BuscaLargura",a[a.BuscaProfundidade=1]="BuscaProfundidade",a[a.BuscaGulosa=2]="BuscaGulosa"})(a||(a={}))})();
+//# sourceMappingURL=models.bundle.js.map

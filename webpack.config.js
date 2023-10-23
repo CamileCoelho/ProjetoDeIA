@@ -5,12 +5,23 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
 
-  // O ponto de entrada da aplicação
   entry: {
-    index: path.resolve(__dirname, 'src/views', 'index.ts')
-  },
-
-  // Configuração de output do build
+    index: path.resolve(__dirname, 'src/views', 'index.ts'),
+    models: [
+      path.resolve(__dirname, 'src/models', 'Resultado.ts'),
+      path.resolve(__dirname, 'src/models', 'Robo.ts'),
+      path.resolve(__dirname, 'src/models', 'Rotas.ts'),
+      path.resolve(__dirname, 'src/models', 'TiposDeBuscaEnum.ts'),
+      path.resolve(__dirname, 'src/models', 'Vertice.ts'),
+    ],
+    algoritimos: [
+      path.resolve(__dirname, 'src/algoritimos-de-busca', 'Busca.ts'),
+      path.resolve(__dirname, 'src/algoritimos-de-busca', 'BuscaGulosa.ts'),
+      path.resolve(__dirname, 'src/algoritimos-de-busca', 'BuscaLargura.ts'),
+      path.resolve(__dirname, 'src/algoritimos-de-busca', 'BuscaProfundidade.ts'),
+    ]
+  },  
+  
   output: {
     filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist')
