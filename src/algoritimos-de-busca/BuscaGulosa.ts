@@ -45,11 +45,11 @@ export class BuscaGulosa {
     const fronteira: Vertice[] = [];
     const { resultado, qtdVisitados, qtdExpandidos } = this.busca(origem, destino, fronteira);
     var caminhoString = this.pegaCaminho(resultado, qtdVisitados, qtdExpandidos);
-    const resultadoObjeto = new Resultado(caminhoString, qtdVisitados, qtdExpandidos)
+    const resultadoObjeto = new Resultado(caminhoString, qtdVisitados, qtdExpandidos);
     return resultadoObjeto;
   }
 
-  calculaDistancia(origem: string, destino: string){
+  public calculaDistancia(origem: string, destino: string){
     let coordenadaDestino = this.dicPrateleiraParaCoordenada[destino];
 
     const [xOrigem, yOrigem] = origem.split('x').map(Number);
@@ -111,13 +111,15 @@ export class BuscaGulosa {
       if (atual.pai === null || !this.ehAncestral(r, atual.pai)) {
         qtdVisitados += 1;
 
-        if(this.ehPrateleira(r)){
+        if(this.ehPrateleira(r))
+        {
           if( r === destino){
             const novoPrateleira = new Vertice(r, atual, atual.gn, 0);
             fronteira.push(novoPrateleira);
           }
-        } else{
-        
+        } 
+        else
+        {        
           const distancia = this.calculaDistancia(r, destino);      
           let hn = distancia;
 

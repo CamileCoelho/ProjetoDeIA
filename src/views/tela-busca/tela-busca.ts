@@ -14,9 +14,9 @@ const robo5 = new Robo('4x12', "R5");
 
 const rotas = new Rotas();
 
-const algbuscaLargura = new BuscaLargura(rotas);
-const algbuscaProfundidade = new BuscaProfundidade(rotas);
-const algbuscaGulosa = new BuscaGulosa(rotas);
+const algBuscaLargura = new BuscaLargura(rotas);
+const algBuscaProfundidade = new BuscaProfundidade(rotas);
+const algBuscaGulosa = new BuscaGulosa(rotas);
 
 function handleCalcularClick() {
   const algoritmoElement = document.getElementById("algoritmo") as HTMLSelectElement | null;
@@ -30,15 +30,15 @@ function handleCalcularClick() {
 
   if (algoritmo == "0") 
   {
-    resultado = realizaBusca(algbuscaLargura, prateleira);
+    resultado = realizaBusca(algBuscaLargura, prateleira);
   } 
   else if (algoritmo == "1") 
   {
-    resultado = realizaBusca(algbuscaProfundidade, prateleira);
+    resultado = realizaBusca(algBuscaProfundidade, prateleira);
   } 
   else if (algoritmo == "2") 
   {
-    resultado = realizaBusca(algbuscaGulosa, prateleira);
+    resultado = realizaBuscaGulosa(prateleira);
   } 
   else 
   {
@@ -52,11 +52,11 @@ function handleCalcularClick() {
   } 
 
   limparPosicaoAntiga(resultado.robo);
-
+  
   resultado.robo.coordenada = resultado.caminho[resultado.caminho.length - 2]; 
-
-  if(algoritmo == "2") resultado.robo.coordenada = resultado.robo.coordenada.split(' - ')[0];
-    
+  
+  if(algoritmo == "2") resultado.robo.coordenada = resultado.robo.coordenada.split(' - ')[0]
+  
   atualizaPosicaoRoboNoHTML(resultado.robo); 
   
   function mapearAlgoritmo(algoritmo: number): string {
@@ -102,17 +102,28 @@ function realizaBusca(algoritimo: any, prateleira: string) {
   return comparaResultado([resultadoR1, resultadoR2, resultadoR3, resultadoR4, resultadoR5]);
 }
 
-function realizaBuscaGulosa(algoritimo: any, prateleira: string) {
-  var resultadoR1 = algoritimo.realizaBusca(robo1.coordenada, prateleira);
-  var resultadoR2 = algoritimo.realizaBusca(robo2.coordenada, prateleira);
-  var resultadoR3 = algoritimo.realizaBusca(robo3.coordenada, prateleira);
-  var resultadoR4 = algoritimo.realizaBusca(robo4.coordenada, prateleira);
-  var resultadoR5 = algoritimo.realizaBusca(robo5.coordenada, prateleira);
+function realizaBuscaGulosa(this: any, prateleira: string) {
+  const heuristicaRobos = [
+    algBuscaGulosa.calculaDistancia(robo1.coordenada, prateleira),
+    algBuscaGulosa.calculaDistancia(robo2.coordenada, prateleira),
+    algBuscaGulosa.calculaDistancia(robo3.coordenada, prateleira),
+    algBuscaGulosa.calculaDistancia(robo4.coordenada, prateleira),
+    algBuscaGulosa.calculaDistancia(robo5.coordenada, prateleira)
+  ];
 
-  atribuiRoboAoResultado(resultadoR1, resultadoR2, resultadoR3, resultadoR4, resultadoR5)
-  
-  return comparaResultado([resultadoR1, resultadoR2, resultadoR3, resultadoR4, resultadoR5]);
+  const roboIndex = heuristicaRobos.indexOf(Math.min(...heuristicaRobos));
+
+  const roboSelecionado = [robo1, robo2, robo3, robo4, robo5][roboIndex];
+
+  var resultado = new Resultado([], 0, 0);
+
+  resultado =  algBuscaGulosa.realizaBusca(roboSelecionado.coordenada, prateleira);
+
+  resultado.robo = roboSelecionado;
+
+  return resultado;
 }
+
 
 function atualizaPosicaoRoboNoHTML(roboEscolhido: Robo) {
     const tdElement = document.getElementById(roboEscolhido.coordenada);
@@ -128,7 +139,7 @@ function limparPosicaoAntiga(roboEscolhido: Robo) {
   }
 }
 
-function atribuiRoboAoResultado(resultadoR1: Resultado, resultadoR2: Resultado, resultadoR3: Resultado, resultadoR4: Resultado, resultadoR5: Resultado) {
+function atribuiRoboAoResultado(resultadoR1: any, resultadoR2: any, resultadoR3: any, resultadoR4: any, resultadoR5: any) {
   resultadoR1.robo = robo1;
   resultadoR2.robo = robo2;
   resultadoR3.robo = robo3;
@@ -137,18 +148,6 @@ function atribuiRoboAoResultado(resultadoR1: Resultado, resultadoR2: Resultado, 
 }
 
 function comparaResultado(valores: Resultado[]): Resultado {
-  var resultado = valores[0];
-  valores.forEach(r => {
-    if (resultado.caminho.length > r.caminho.length) {
-      resultado.caminho = r.caminho;
-      resultado = r;
-    }
-  });
-  
-  return resultado;
-}
-
-function comparaResultadoGulosa(valores: Resultado[]): Resultado {
   var resultado = valores[0];
   valores.forEach(r => {
     if (resultado.caminho.length > r.caminho.length) {
